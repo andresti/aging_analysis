@@ -78,7 +78,7 @@ def stuff():
       if not (event.digi_time[i_digi] < 300 or event.digi_time[i_digi] > 700): continue
       #" & digi_wire=='wire0'"
       #print event.timestamp/1000000000#, totimestamp(datetime.datetime.utcnow()), totimestamp(datetime.datetime.utcnow()) - event.timestamp/1000
-      print n_digis, i_digi, datetime.datetime.fromtimestamp(event.timestamp >> 32) #, "%d-%m-%Y %H:%M:%S"
+      print n_digis, i_digi, datetime.datetime.fromtimestamp(event.timestamp) #, "%d-%m-%Y %H:%M:%S"
 
 def stuff2():
   ROOT.TH1.AddDirectory(ROOT.kFALSE)
@@ -92,7 +92,8 @@ def stuff2():
     if tree.LoadTree(jentry) < 0: break
     if tree.GetEntry(jentry) <= 0: continue
     ui = (i & 0xffffffffffffffff)
-    date = ROOT.TDatime(tree.timestamp & 0xffffffffffffffff)
+    #date = ROOT.TDatime(tree.timestamp & 0xffffffffffffffff)
+    date = ROOT.TDatime(tree.timestamp)
     print type(tree.timestamp), uint, date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour(), date.GetMinute(), date.GetSecond()
 
   """for event in tree:
